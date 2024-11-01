@@ -1,0 +1,17 @@
+.mainNav {
+    margin-top: 10px;
+    border-radius: 15px;
+    padding: 16px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid lightblue;
+    background-color: rgba(255, 255, 255, .15);
+}
+
+.pageImg {
+    background-image: url(../Toolbar/assets/pexels-photo-1640774.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
