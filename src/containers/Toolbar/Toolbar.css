@@ -10,8 +10,23 @@
     background-color: rgba(255, 255, 255, .15);
 }
 
-.pageImg {
-    background-image: url(../Toolbar/assets/pexels-photo-1640774.jpeg);
-    background-size: cover;
-    background-repeat: no-repeat;
+.navItemBtn {
+    text-decoration: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    color: mediumblue;
+    text-shadow: none;
+    background: transparent;
+    cursor: pointer;
+    border: 1px solid #ffffff80;
+    transition: 0.5s ease;
+    user-select: none;
+}
+.navItemBtn:hover,:focus {
+    color: #ffffff;  background: #008cff;
+    border: 1px solid #008cff;  text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
+    box-shadow: 0 0 5px #008cff, 0 0 20px #008cff, 0 0 50px #008cff,    0 0 100px #008cff;
 }

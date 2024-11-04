@@ -1,15 +1,25 @@
 import {MEAL} from "../../mealTime";
 import './MealForm.css'
 import React, {FormEvent, useState} from "react";
-import {MealPropsMutation} from "../../types";
+import {ApiMeal, MealPropsMutation} from "../../types";
 import axiosApi from "../../axiosApi";
+import ButtonSpinner from "../../UI/ButtonSpinner/ButtonSpinner";
 
-const MealForm = () => {
-    const [meals, setMeals] = useState<MealPropsMutation>({
-        mealTime: '',
-        description: '',
-        calories: 0,
-    });
+interface Props {
+    newMeal: (meal: ApiMeal) => void;
+    existingMeal?: MealPropsMutation
+    isLoading?: boolean
+    isEdit?: boolean
+}
+
+const initialState = {
+    mealTime: '',
+    description: '',
+    calories: 0
+}
+
+const MealForm: React.FC<Props> = ({newMeal, existingMeal = initialState, isEdit = false, isLoading= false}) => {
+    const [meals, setMeals] = useState<MealPropsMutation>(existingMeal);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -21,8 +31,25 @@ const MealForm = () => {
     }
 
     const onFormSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        await axiosApi.post('/meal.json', meals);
+        try {
+            e.preventDefault();
+            await axiosApi.post('/meal.json', meals);
+
+            newMeal({
+                ...meals,
+                calories: Number(meals.calories),
+            });
+
+            if(!isEdit) {
+                setMeals({
+                    mealTime: '',
+                    description: '',
+                    calories: 0,
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
     return (
             <form className='formContainer' onSubmit={onFormSubmit}>
@@ -65,7 +92,12 @@ const MealForm = () => {
                     className='form-control'/>
                     <p className='mt-1 mb-0 ms-1 fs-4' style={{color: 'slateblue'}}>kcal</p>
                 </div>
-                <button type='submit' className='btn' style={{backgroundColor: 'slateblue', color: 'white'}}>Save</button>
+
+
+                <button type='submit' className='btn' style={{backgroundColor: 'slateblue', color: 'white'}}>
+                    {isEdit ? 'Edit' : 'Save'}
+                    {isLoading ? <ButtonSpinner /> : null}
+                </button>
             </form>
     );
 };

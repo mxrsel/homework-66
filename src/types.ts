@@ -15,3 +15,9 @@ export interface MealPropsMutation {
     description: string;
     calories: number;
 }
+
+export type ApiMeal = Omit<MealPropsMutation, 'id'>
+
+export interface MealList {
+    [id: string]: ApiMeal;
+}
